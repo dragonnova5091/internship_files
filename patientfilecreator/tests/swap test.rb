@@ -7,7 +7,7 @@ def bubbleSort(array, bit) #needs a two part array [[1,2],[3,4]...]
     i = 0
     array.each do
       if i < (array.length-1)
-        if array[i][bit].to_i > array[i+1][bit].to_i 
+        if array[i][bit] > array[i+1][bit]
           #switch the two values if the first is bigger than the second
           array[i],array[i+1] = array[i+1],array[i]
           sorted = false
