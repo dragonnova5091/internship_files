@@ -22,6 +22,9 @@ filenames = []
 #original file is -- simple_somatic_mutation.open.BRCA-EU.vcf -- . this is
 #just for convinence.
 datafile = "tests/smalldata.txt"
+#dont use the next one, it takes forever compared to the big one
+#datafile = "../../simple_somatic_mutation.open.BRCA-EU.vcf"
+
 
 
 #
