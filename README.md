@@ -4,6 +4,13 @@ the data used currently is simple_somatic_mutation.open.BRCA-EU.vcf
 
 however, to use another file: open patientfilecreatormaster.rb with a text editor and change the 'datafile' variable to whatever location you want(make sure it stays in quotes)
 
-the file i'm using to run everything is SStoruneverything.sh, a shell script that calls and executes everything needed to run the program.
+the file i'm using to run everything is SStoruneverything.sh, a shell script that calls and executes everything needed to run the programs. it is the call all master program
 
-the final product should appear in the directory you've run this from. I think I'll call it: 'mutatedsequence.sam' or something else depending on how it is formatted.
+the final product should appear in the directory you've run this from. I think I'll call it: 'mutatedsequence.sam' or something else depending on how it is formatted. however, since im not done yet, the file is absent.
+
+
+#############################
+the required programs/modules are ruby and samtools.
+preferably  ruby 1.8.7+
+            samtools 1.4+
+            i think shell scripts run like a batch
