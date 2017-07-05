@@ -1,11 +1,11 @@
 #master file
 #calls the functions from the others
 
-Dir["./*.rb"].each { |file| require file }
+Dir["./patientfilecreator/*.rb"].each { |file| require file }
 
 #checks for the directory "patientfiles" then makes one if it doesn't exist
 if File.directory?("patientfiles") == false
-  Dir.new "patientfiles"
+  Dir.mkdir "patientfiles"
   puts "made new dir"
 end
 
@@ -24,7 +24,7 @@ filenames = []
 
 #datafile = "tests/smalldata.txt"
 #dont use the next one, it takes forever compared to the big one
-datafile = "../../simple_somatic_mutation.open.BRCA-EU.vcf"
+datafile = gets.chomp
 
 
 
