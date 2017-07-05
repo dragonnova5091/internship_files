@@ -6,8 +6,9 @@ class Master
   end
 
   #gets the locations that are within 40 of each other
-  def closelocationlocator(filelocationandname)   # returns indexes of the file with
-                                                  #locations that are close together
+  #returns indexes of the file with locations on the chr close together
+  # like this arr [[close1, close2], [close1, close2, close3], [close1, close2], etc.]
+  def closelocationlocator(filelocationandname)
     file = IO.readlines(filelocationandname)
     ind1 = 0
     closetogether = []
@@ -39,6 +40,11 @@ class Master
     return closetogether
   end
 
+
+  #returns an array of [closelocations and notcloselocations] each of which is an array
+  #closelocations is an array of arrays
+  #     each array is all the locations close together
+  #notcloselocations is an array of locations
   def all_locations(filelocationandname)
     file = IO.readlines(filelocationandname)
 
@@ -75,9 +81,13 @@ class Master
       end
       ind += 1
     end
+
+    arr = [closelocations, notcloselocations]
+    return arr
   end
 
-  def get_limits(location)
+  #input either one part of closelocations or one part of notcloselocations
+  def get_limits(location) #returns array of [chromosome, lowerlimit, upperlimit]
     begin
       !location.split(",")
       lower = location[1].to_i - 20
@@ -88,14 +98,30 @@ class Master
       temparr = []
       location.each do |place|
         !place.split(",")
-        chr = place[0]
+        @chr = place[0]
         temparr << place[1]
       end
-      temparr.sort
-      lower = temparr[0].to_i - 25
-      upper = temparr[temparr.length-1].to_i +1
-      arr = [chr, lower, upper]
+      #temparr.sort
+      lower = temparr[0].to_i - 20
+      upper = temparr[temparr.length-1].to_i + 20
+      arr = [@chr, lower, upper]
       return arr
     end
   end
+end
+
+master = Master.new
+Dir.chdir("../patientfiles")
+Dir.glob("*.txt").each do |filename|
+  array = master.all_locations("../patientfiles/#{filename}")
+  #puts filename
+
+  array.each do |arr|
+    arr.each do |place|
+      limits = master.get_limits(place)
+      print limits
+      print "\n"
+    end
+  end
+
 end
