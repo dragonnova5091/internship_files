@@ -1,7 +1,9 @@
 "# internship_files"
-this was based off of data from a file that is tooo big to store here
-it is 1.9GB and i can't store it here. 
-however.
-i am using the first 633000 lines of text from it in a file called smalldata.txt
+the data used currently is simple_somatic_mutation.open.BRCA-EU.vcf
+  it is a large .vcf file, probably too big to load on a normal computer. However, using the 'less' command in cmd is one way too look at its format. the other way to see the first part of the file is in the smalldata file, @ tests/smalldata.txt
 
+however, to use another file: open patientfilecreatormaster.rb with a text editor and change the 'datafile' variable to whatever location you want(make sure it stays in quotes)
 
+the file i'm using to run everything is SStoruneverything.sh, a shell script that calls and executes everything needed to run the program.
+
+the final product should appear in the directory you've run this from. I think I'll call it: 'mutatedsequence.sam' or something else depending on how it is formatted.
