@@ -17,7 +17,10 @@ class Master
       if ind1 < (file.length-2)
         line1 = file[ind1].split("\t")
         line2 = file[ind1+1].split("\t")
+        #print line1 
+        #sleep 10
         if line1[0] == line2[0]
+          
           if (line1[1].to_i - line2[1].to_i).abs < 40
             temp = [ind1, ind1+1]
 
@@ -37,6 +40,7 @@ class Master
         ind1+=1
       end
     end
+    #print closetogether
     return closetogether
   end
 
@@ -83,28 +87,39 @@ class Master
     end
 
     arr = [closelocations, notcloselocations]
+    #print arr
     return arr
   end
 
   #input either one part of closelocations or one part of notcloselocations
   def get_limits(location) #returns array of [chromosome, lowerlimit, upperlimit]
+    #print "!!#{location}  "
+    sleep 4
     begin
       !location.split(",")
       lower = location[1].to_i - 20
+      #print location[1]
+      #print "~~  "
+      #sleep 4
       upper = location[1].to_i + 20
       arr = [location[0],lower, upper]
       return arr
     rescue
       temparr = []
       location.each do |place|
-        !place.split(",")
-        @chr = place[0]
-        temparr << place[1]
+        place = place.split(",")
+        @chro = place[0]
+        #print @chro
+        sleep 0.5
+        print place[1].to_i
+        temparr << place[1].to_i
       end
+      #print "~"
       #temparr.sort
-      lower = temparr[0].to_i - 20
-      upper = temparr[temparr.length-1].to_i + 20
-      arr = [@chr, lower, upper]
+      lower = temparr[0] - 20
+      upper = temparr[temparr.length-1] + 20
+      arr = [@chro, lower, upper]
+      #print "@#{arr}~ "
       return arr
     end
   end
@@ -116,12 +131,14 @@ Dir.glob("*.txt").each do |filename|
   array = master.all_locations("../patientfiles/#{filename}")
   #puts filename
 
-  array.each do |arr|
-    arr.each do |place|
-      limits = master.get_limits(place)
-      print limits
-      print "\n"
-    end
+  array[0].each do |close|
+    #print close
+    #print "@#~"
+   # sleep 2
+    master.get_limits(close)
+  end
+  array[1].each do |locat|
+    master.get_limits(locat)
   end
 
 end
