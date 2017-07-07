@@ -32,7 +32,8 @@ class Sorter
       line = data.split("\t")
       if line[0].include?("chrX")
         num = 23
-      else   #please ignore this obnoxious case statement. it is a sustitute for .to_i
+      else   
+      #please ignore this obnoxious case statement. it is a sustitute for .to_i, as for some reason it doesnt work
         case line[0]
         when 'chr1'
           num = 1
@@ -97,7 +98,7 @@ class Sorter
     #print @sortcard
 
 
-    #makes a new array of the mutations soreted by chromosome number
+    #makes a new array of the mutations sorted by chromosome number
     sortedbychromosome = []
     @sortcard.each do |type|
       index = 2

@@ -10,7 +10,7 @@ if File.directory?("patientfiles") == false
 end
 
 ########READ THE NEXT 3 LINES!!!##########
-datafile = "tests/smalldata.txt"
+datafile = "smalldata.txt"
 #the next line is for whatever other file you would rather use.
 #datafile =
 ##########################################

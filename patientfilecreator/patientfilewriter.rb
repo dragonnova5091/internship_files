@@ -20,12 +20,13 @@ class Writer
   def removeDuplicates(array)
     #this was more complicated, but then i remembered the .uniq function
     nodoublesarray = array.uniq
-    puts "removed duplicatess"
+    #puts "removed duplicatess"
     return nodoublesarray
   end
 
 
   def write_mutations(array)
+    #puts "writing"
     wrotetimes = 0 #records howmany times the file was written to
     texttowrite = removeDuplicates(array) # essentially .uniq
     #puts texttowrite
@@ -39,7 +40,7 @@ class Writer
       end
 
     end
-    puts "wrote #{wrotetimes} times to #{@donornumber}"
+    #puts "wrote #{wrotetimes} times to #{@donornumber}"
   end
 
   def closeDonorFile
