@@ -1,14 +1,24 @@
 #!usr/bin/sh
 #some tests
-echo "making individual patient files"
-cd 'c:/users/esnak/documents/internship_files/patientfilecreator'
-echo "type the data file name ie: data.vcf"
-ruby master.rb
+echo start
 
-for $file in patientfiles/*
-  
-done
+while read line; do 
+	echo "$line"
+	sleep 0.1
+	
+done <testfile.txt
 
+echo "done"
+
+
+
+if test $1 -gt 0 
+then 
+	echo "here"
+	exit 1
+fi
 
 
 read
+
+#cat testfile.txt 

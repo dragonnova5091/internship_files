@@ -12,7 +12,7 @@ end
 ########READ THE NEXT 3 LINES!!!##########
 datafile = "smalldata.txt"
 #the next line is for whatever other file you would rather use.
-#datafile =
+#datafile = "bigdata.txt"
 ##########################################
 
 #makes the neccessary objects

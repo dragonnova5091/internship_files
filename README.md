@@ -8,6 +8,7 @@ the file i'm using to run everything is SStoruneverything.sh, a shell script tha
 
 !!## WARNING ##!!
 this program takes about an hour to run on a normal computer when using the smalldata file. do not try and run the original file on a normal computer. unless you wish to run it for 3+ hours non-stop
+
 a lot of folders and files will appear in this directory
 #################
 
@@ -19,3 +20,4 @@ the required programs/modules are ruby and samtools.
 preferably  ruby 1.8.7+
             samtools 1.4+
             i think shell scripts run like a batch, no requirements there
+ 

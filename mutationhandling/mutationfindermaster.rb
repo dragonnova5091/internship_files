@@ -2,7 +2,7 @@
 #this program writes a set of files formatted for the samtools application
 #more detail is described below
 
-
+require 'limit_fixing/limitfixer.rb'
 
 # Limitwriter has three functions:
 # => closelocationlocator
@@ -35,13 +35,13 @@ class Limitwriter
         
         if line1[0] == line2[0]
           
-          if (line1[1].to_i - line2[1].to_i).abs < 40
+          if (line1[1].to_i - line2[1].to_i).abs < 75
             temp = [ind1, ind1+1]
 
             #if the next number is within range then keep adding
             ind2 = ind1 + 2
             line3 = file[ind2].split("\t")
-            while (line2[1].to_i - line3[1].to_i).abs < 40 && ind2 < file.length-2
+            while (line2[1].to_i - line3[1].to_i).abs < 75 && ind2 < file.length-2
               temp << ind2
               line2 = file[ind2].split("\t")
               ind2 += 1
@@ -406,11 +406,16 @@ def step2
   #puts Dir.pwd
   Dir.chdir("patientfiles/genechunksdata")
 
+  lngth = Dir.glob("*.txt").length
+  filenumber = 1
+
   #adds more data to the genechunksdata/genechunklimitsdata_donor# file
     # => formats it as such
       # => chr,lowerlimit,upperlimit  mutation_location,originalsequence,newsequence  'repeats
       # => for each mutation in the sequence'
   Dir.glob("*.txt") do |filename|
+    puts "file: #{filenumber}/#{lngth}"
+    filenumber+=1
 
     add_data = []
 
@@ -474,22 +479,126 @@ def step2
   end 
 end
 
+#sort tests
+
 def step3
-  Dir.chdir("patientfiles/genechunksdata")
+  #Dir.chdir("patientfiles/genechunksdata")
 
-  sorter = Filesorter.new
-  file = sorter.sort("genechunklimitsdata_donorDONOR=DO217787.txt")
+  lngth = Dir.glob("*.txt").length
+  filenumber = 1 
 
-  writer = File.open("genechunklimitsdata_donorDONOR=DO217787.txt", "w")
+  Dir.glob("*.txt").each do |filename|
+    puts "file: #{filenumber}/#{lngth}"
+    clear_blank_lines(filename)
+    puts "formatting the next file"
+    filenumber += 1
+    fixer(filename)
+    clear_blank_lines(filename)
+
+    
+    limit_fixer(filename)
+  end
+
+
+end
+
+
+def fixer(filename)
+  file = IO.readlines(filename)
+
+  limits = [] 
+  mutations = [] 
+
   file.each do |line|
+    line = line.split("\t")
+    limits << line[0]
+    mutations << line[1]
+  end
+
+  limits = limits.uniq
+  mutations = mutations.uniq
+
+  temparray = [] 
+  limits.each do |line|
+    line = line.split(",")
+    temparray << line
+  end
+
+  limits = temparray
+
+
+  temparray = [] 
+  mutations.each do |line|
+    line = line.split(",")
+    temparray << line 
+  end
+
+  mutations = temparray
+
+  #print mutations
+  #gets 
+
+
+  ind = 0 
+  newfile = []
+
+  limits.each do 
+    #puts "try 1"
+    indx = 0
+    wrote = false
+    mutations.each do 
+      #puts "made it here"
+      #print mutations
+      #print "\n"
+      #print limits[ind]
+      #print "\n"
+      #gets
+      if limits[ind][0] == mutations[indx][0] && limits[ind][1].to_i < mutations[indx][1].to_i && limits[ind][2].to_i > mutations[indx][1].to_i
+        if wrote == false
+          #puts "farther down"
+          newfile[ind] = "#{limits[ind].join(",")}\t#{mutations[indx].join(",")}"
+          wrote = true
+        else
+          newfile[ind] = "#{newfile[ind]}\t#{mutations[indx].join(",")}"
+        end
+
+        mutations.delete_at(indx)
+        indx -=1
+      end
+      indx = indx + 1
+    end
+    ind += 1 
+  end
+
+  #puts newfile
+  writer = File.open(filename, "w")
+
+  newfile.each do |line|
+    writer.syswrite("#{line}\n")
+  end
+end
+
+def clear_blank_lines(filename)
+  file = IO.readlines(filename)
+
+  newfile = []
+  file.each do |line|
+    if line.include?("chr")
+      newfile << line 
+    end
+  end
+
+  writer = File.open(filename, "w")
+  newfile.each do |line|
     writer.syswrite(line)
   end
-  writer.close 
+  puts "cleared blank lines "
 end
 
 
 step1
 Dir.chdir("..")
-step2 #step 2 take a good 40+ minutes to run on a normal computer, be careful
-#step3
+step2 #step 2 take a good 80+ minutes to run on a normal computer, be careful
+#Dir.chdir("patientfiles/genechunksdata") #use this line if step two is commented out, otherwise comment it
+step3
 
