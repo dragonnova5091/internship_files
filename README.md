@@ -18,8 +18,8 @@ the final product should appear in the directory you've run this from. I think I
 #############################
 
 the required programs/modules are ruby and samtools.
-preferably  ruby 1.8.7+
+preferably  ruby 1.8.7+,
             samtools 1.4+ ~ samtools can't be run on a windows computer
-                it requrires a linux or mac system
+                it requrires a linux or mac system. 
             i think shell scripts run like a batch, no requirements there
  
